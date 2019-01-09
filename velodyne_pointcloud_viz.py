@@ -57,7 +57,7 @@ class VelodynePointsViz():
 	    ax.axis('scaled')  # {equal, scaled}
 	    plt.show()
 
-	@mayavi.mlab.animate(delay = 200)
+	@mayavi.mlab.animate(delay = 200) # todo: change for to while
 	def __update_animation(self):
 		for f in os.listdir(self.velo_path):
 			self.map.mlab_source.set(self.__load_kitti_velo_points(f))
