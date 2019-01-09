@@ -6,8 +6,9 @@ class VelodynePointsViz():
 
 	def __init__(self, path):
 		self.velo_path = path
+		self.points = []
 
-	def __load_velo_points(self, file_name, chunksize=4): # this is a private function
+	def __load_kitti_velo_points(self, file_name, chunksize=4): # this is a private function
 
 		path = os.path.join(self.velo_path, file_name)
 		print(path)
@@ -17,7 +18,8 @@ class VelodynePointsViz():
     
 	    import mayavi.mlab
 
-	    self.__load_velo_points(file_name)
+	    if len(self.points) == 0:
+	    	self.__load_kitti_velo_points(file_name)
 
 	    fig = mayavi.mlab.figure(bgcolor=(0, 0, 0), size=(640, 360))
 	    mayavi.mlab.points3d(
@@ -39,7 +41,8 @@ class VelodynePointsViz():
 	    import matplotlib.pyplot as plt
 	    from mpl_toolkits.mplot3d import Axes3D
 
-	    self.__load_velo_points(file_name)
+	    if len(self.points) == 0:
+	    	self.__load_kitti_velo_points(file_name)
 
 	    skip = 100   # Skip every n points
 
