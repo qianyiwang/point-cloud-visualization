@@ -2,7 +2,7 @@
 import os
 import numpy as np
 import mayavi.mlab
-class VelodynePointsViz():
+class KittiVelodynePointsViz():
 	"""docstring for VelodynePointsViz"""
 
 	def __init__(self, path):
@@ -57,11 +57,25 @@ class VelodynePointsViz():
 	    ax.axis('scaled')  # {equal, scaled}
 	    plt.show()
 
-	@mayavi.mlab.animate(delay = 200) # todo: change for to while
+	@mayavi.mlab.animate(delay = 100) # todo: change for to while
 	def __update_animation(self):
-		for f in os.listdir(self.velo_path):
-			self.map.mlab_source.set(self.__load_kitti_velo_points(f))
-			yield
+		i = 0
+		files = os.listdir(self.velo_path)
+		while True:
+			if i<len(files):
+				self.__load_kitti_velo_points(files[i])
+				self.map.mlab_source.reset(
+					x=self.points[:, 0], 
+					y=self.points[:, 1], 
+					z=self.points[:, 2],
+					scalars=self.points[:, 2]
+				)
+				i += 1
+				yield
+			else:
+				print('DONE')
+				exit()
+			
 
 	def kitti_velo_animat(self, start_file):
 		self.__load_kitti_velo_points(start_file)
